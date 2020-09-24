@@ -1,0 +1,15 @@
+{% extends ' mixes/base.html' %}
+{% block content %}
+<br/>
+<div class="container">
+  <h2>Are you sure you want to delete this Playlist?</h2><br/>
+  <h2><a href="{% url 'detailmix' mix.id %}">{{mix.title}}</a></h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br/>
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
+  <br/>
+</div>
+{% endblock %}

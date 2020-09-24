@@ -1,0 +1,30 @@
+{% extends 'mixes/base.html' %}
+{% block content %}
+<div class="container">
+  <h1>{{ mix.title }}</h1>
+  <h4 class="text-muted">{{ mix.user.username }}</h4>
+  {% if user.id == mix.user.id %}
+  <a href="{% url 'addvideo' mix.id %}" class="btn btn-primary" style="margin-right: 25px">Add Video</a>
+  <a href="{% url 'updatemix' mix.id %}" class="btn btn-primary" style="margin-right: 25px">Edit</a>
+  <a href="{% url 'deletemix' mix.id %}" class="btn btn-danger" style="margin-right: 25px">Delete</a>
+  {% endif %}
+  <br/>
+  <div class="row">
+    {% for video in mix.video_set.all %}
+    <div class="col-md-4 mt-3">
+      <div class="card mb-4 shadow-sm">
+        <iframe width="100%" height="225" src="https://www.youtube.com/embed/{{ video.youtube_id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="card-body">
+          <p class="card-text">{{ video.title }}</p>
+          {% if user.id == mix.user.id %}
+          <a href="{% url 'deletevideo' video.id %}" class="btn btn-danger">Delete Video</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <br/>
+  <h5>Shareable Link: <a href="http:///myMix/{{mix.id}}">http:///myMix/{{ mix.id }}</a></h5>
+</div>
+{% endblock %}
